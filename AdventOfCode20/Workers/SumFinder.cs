@@ -15,11 +15,16 @@ namespace AdventOfCode20.Workers
             _inputStream = inputStream;
 
         }
-        public int GetResult()
+        public long GetResult()
         {
             var nums = FindSumNumbers(GetInput(_inputStream));
-            Console.WriteLine(nums);
-            return nums.Item1 * nums.Item2;
+            Console.WriteLine(String.Concat(nums.Select(x => x.ToString() + " ")));
+            long result = 1;
+            foreach(var num in nums)
+            {
+                result *= num;
+            }
+            return result;
         }
         private int[] GetInput(Stream dataStream)
         {
@@ -32,17 +37,22 @@ namespace AdventOfCode20.Workers
             }
             return loadedInputNumbers.ToArray();
         }
-        private Tuple<int, int> FindSumNumbers(int[] numbersInArray)
+        private int[] FindSumNumbers(int[] numbersInArray)
         {
             Array.Sort(numbersInArray);
             for (int i = 0; i < numbersInArray.Length; i++)
             {
                 for (int a = i + 1; a < numbersInArray.Length; a++)
                 {
-                    if(numbersInArray[i] + numbersInArray[a] == _targetSum)
+                    for (int b = a + 1; b < numbersInArray.Length; b++)
                     {
-                        return new Tuple<int, int>(numbersInArray[i], numbersInArray[a]);
-                    }    
+                        if (numbersInArray[i] + numbersInArray[a] + numbersInArray[b] == _targetSum)
+                        {
+                            return new int[] { numbersInArray[i], numbersInArray[a], numbersInArray[b] };
+                        }
+
+                    }
+
                 }
             }
             return null;
