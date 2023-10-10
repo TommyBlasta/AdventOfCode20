@@ -18,7 +18,7 @@ namespace AdventOfCode20.Workers
         public long GetResult()
         {
             var nums = FindSumNumbers(GetInput(_inputStream));
-            Console.WriteLine(String.Concat(nums.Select(x => x.ToString() + " ")));
+            //Console.WriteLine(String.Concat(nums.Select(x => x.ToString() + " ")));
             long result = 1;
             foreach(var num in nums)
             {
